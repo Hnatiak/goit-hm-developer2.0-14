@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.example.todoapp.model.Note;
 import org.springframework.stereotype.Service;
@@ -13,16 +12,15 @@ import org.springframework.stereotype.Service;
 public class NoteService {
 
     private final Map<Long, Note> notes = new HashMap<>();
-    private final Random random = new Random();
+    private long nextId = 1;
 
     public List<Note> listAll() {
         return new ArrayList<>(notes.values());
     }
 
     public Note add(Note note) {
-        long id = Math.abs(random.nextLong());
-        note.setId(id);
-        notes.put(id, note);
+        note.setId(nextId++);
+        notes.put(note.getId(), note);
         return note;
     }
 
